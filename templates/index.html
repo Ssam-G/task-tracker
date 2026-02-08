@@ -1,39 +1,60 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Task Tracker</title>
+
+    <!-- Handwritten font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet" />
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   </head>
+
   <body>
-    <main class="container">
-      <h1>Task Tracker</h1>
+    <main class="page">
+      <section class="note" aria-label="Sticky note task list">
+        <header class="note-header">
+          <h1>To-Do</h1>
+          <span class="count">{{ tasks|length }}</span>
+        </header>
 
-      <form class="add-form" action="{{ url_for('add_task') }}" method="post">
-        <input type="text" name="title" placeholder="Add a task..." autocomplete="off" />
-        <button type="submit">Add</button>
-      </form>
+        <div class="note-body">
+          <ul class="task-list" aria-label="Tasks">
+            {% for task in tasks %}
+              <li class="task-row {{ 'done' if task.completed == 1 else '' }}">
+                <!-- Toggle (checkbox) -->
+                <form class="inline" action="{{ url_for('toggle_task', task_id=task.id) }}" method="post">
+                  <button class="checkbox" type="submit" aria-label="Toggle complete"></button>
+                </form>
 
-      <ul class="task-list">
-        {% for task in tasks %}
-          <li class="task {{ 'done' if task.completed == 1 else '' }}">
-            <span>{{ task.title }}</span>
+                <!-- Task text -->
+                <span class="task-text">{{ task.title }}</span>
 
-            <div class="actions">
-              <form action="{{ url_for('toggle_task', task_id=task.id) }}" method="post">
-                <button type="submit">
-                  {{ 'Undo' if task.completed == 1 else 'Complete' }}
-                </button>
-              </form>
+                <!-- Delete (only visible on hover) -->
+                <form class="inline delete-form" action="{{ url_for('delete_task', task_id=task.id) }}" method="post">
+                  <button class="delete-btn" type="submit" aria-label="Delete task">×</button>
+                </form>
+              </li>
+            {% endfor %}
+          </ul>
 
-              <form action="{{ url_for('delete_task', task_id=task.id) }}" method="post">
-                <button type="submit">Delete</button>
-              </form>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
+          <!-- Input stays at bottom -->
+          <form class="add-form" action="{{ url_for('add_task') }}" method="post">
+            <input
+              type="text"
+              name="title"
+              placeholder="Write a task…"
+              autocomplete="off"
+              maxlength="120"
+              required
+            />
+            <button class="add-btn" type="submit">Add</button>
+          </form>
+        </div>
+      </section>
     </main>
   </body>
 </html>

@@ -30,7 +30,7 @@ def init_db():
 @app.route("/", methods=["GET"])
 def index():
     conn = get_db_connection()
-    tasks = conn.execute("SELECT * FROM tasks ORDER BY id DESC").fetchall()
+    tasks = conn.execute("SELECT * FROM tasks ORDER BY id ASC").fetchall()
     conn.close()
     return render_template("index.html", tasks=tasks)
 
