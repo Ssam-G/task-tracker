@@ -1,16 +1,21 @@
-# Task Tracker
+# Sticky Note Task Tracker
 
-A simple web-based task tracker built with Flask and SQLite.  
-Users can add tasks, mark them as complete, and delete them, with data persisted locally.
+A minimal task tracker designed to feel like a real yellow sticky note.
+Tasks are written from top to bottom, crossed out with a checkbox, and removed with a subtle hover action.
+
+The app runs as a small desktop window and dynamically resizes as tasks are added, so the sticky note always fits the content.
 
 ---
 
 ## Features
-- Add new tasks
-- View all tasks
-- Mark tasks as complete or undo completion
-- Delete tasks
-- Tasks persist using SQLite
+- Add tasks in a natural, handwritten-style interface
+- Tasks appear in the order they are written (top → bottom)
+- Checkbox to mark tasks complete or incomplete
+- Completed tasks are crossed out
+- Delete button appears only on hover, like erasing a note
+- Input field sits directly below the last task
+- Window automatically resizes as tasks are added or removed
+- No scrolling or unnecessary UI elements
 
 ---
 
@@ -19,24 +24,33 @@ Users can add tasks, mark them as complete, and delete them, with data persisted
 - Flask
 - SQLite
 - HTML / CSS (Jinja templates)
+- pywebview (desktop wrapper)
 
 ---
 
 ## How to run locally
 
-1. Clone the repository
+1. Clone the repository  
 2. Create and activate a virtual environment:
    ```bash
    python3 -m venv .venv
    source .venv/bin/activate
+3. Install Dependencies:
+   ```bash
+   pip install -r requirements.txt
+4. Run the app:
+   ```bash
+   python3 desktop.py
+---
 
-   
 ## What I learned
-- How to build a small web application using Flask
-- Handling GET and POST requests and routing user actions
-- Using SQLite for simple data persistence
-- Implementing basic CRUD operations (create, read, update, delete)
-- Connecting backend logic to HTML templates with Jinja
-- Structuring a Flask project in a clean, maintainable way
-- Debugging runtime errors and iterating on functionality
-- Using Git to track changes, commit incrementally, and push updates to GitHub
+
+- Building a Flask application with clean route separation
+- Using SQLite for lightweight data persistence
+- Implementing full CRUD functionality
+- Passing data from Flask routes into Jinja templates
+- Designing UI behaviour to match real-world mental models
+- Styling an interface using only HTML and CSS (no frameworks)
+- Wrapping a web app into a desktop window using pywebview
+- Dynamically resizing a desktop window based on DOM content
+- Iterating on both functionality and user experience
